@@ -1,4 +1,4 @@
-package com.example.lifetrack;
+package com.example.lifetrack.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lifetrack.R;
 import com.example.lifetrack.databinding.FragmentTaskBinding;
 
 
