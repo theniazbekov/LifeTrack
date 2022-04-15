@@ -1,4 +1,4 @@
-package com.example.lifetrack.adapter;
+package com.example.lifetrack.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,32 +7,34 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lifetrack.data.models.OnBoardModel;
 import com.example.lifetrack.databinding.ItemBoardBinding;
-import com.example.lifetrack.fragments.OnBoardFragment;
-import com.example.lifetrack.fragments.OnItemClick;
-import com.example.lifetrack.model.BoardModel;
+import com.example.lifetrack.utils.interfaces.OnItemClick;
 
 import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHolder> {
-   ArrayList<BoardModel> list;
-   OnItemClick onItemClick;
+    ArrayList<OnBoardModel> list = new ArrayList<>();
+    OnItemClick listener;
 
-   public BoardAdapter(ArrayList<BoardModel> list, OnBoardFragment onBoardFragment){
-       this.list = list;
-   }
 
+    public BoardAdapter(ArrayList<OnBoardModel> list, OnItemClick listener) {
+        this.list = list;
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
     public BoardAdapter.BoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemBoardBinding binding = ItemBoardBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false);
+        ItemBoardBinding binding =
+                ItemBoardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new BoardViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BoardAdapter.BoardViewHolder holder, int position) {
         holder.onBind(list.get(position));
+
     }
 
     @Override
@@ -41,21 +43,21 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHol
     }
 
     public class BoardViewHolder extends RecyclerView.ViewHolder {
-       ItemBoardBinding binding;
+        private ItemBoardBinding binding;
 
-        public BoardViewHolder(@NonNull ItemBoardBinding binding) {
+        public BoardViewHolder(ItemBoardBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void onBind(BoardModel boardModel) {
-            binding.boardImg.setImageResource(boardModel.getImage());
+        public void onBind(OnBoardModel boardModel) {
+            binding.boardingAnimation.setAnimation(boardModel.getAnimation());
             binding.descriptionTv.setText(boardModel.getDescription());
             binding.nextBtn.setText(boardModel.getButtonText());
             binding.nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClick.itemClick(getAdapterPosition());
+                    listener.itemClick(getAdapterPosition());
                 }
             });
 

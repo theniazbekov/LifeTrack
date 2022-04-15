@@ -1,15 +1,14 @@
-package com.example.lifetrack.fragments;
+package com.example.lifetrack.ui.fragments.task;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.lifetrack.R;
 import com.example.lifetrack.databinding.FragmentTaskBinding;
@@ -35,18 +34,25 @@ public class TaskFragment extends Fragment {
     }
 
     private void setData() {
-        if (getArguments()!=null){
+        if (getArguments() != null) {
             String result = getArguments().getString("key");
-            binding.textTv.setText(result);
+            binding.tvText.setText(result);
         }
     }
 
     private void initClickers() {
         binding.applyBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Navigation.findNavController(requireView()).navigate(R.id.createTaskFragment);
-        }
-    });
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(requireView()).navigate(R.id.createTaskFragment);
+            }
+        });
+        binding.fabOpenDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateTaskFragment createTaskFragment = new CreateTaskFragment();
+                createTaskFragment.show(getParentFragmentManager(), "Create Task Bottom Shit Dialog opened");
+            }
+        });
     }
 }
